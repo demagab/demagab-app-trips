@@ -1,0 +1,7 @@
+<div *ngFor="let trip of trips$ | async">
+    <h2>{{ trip.title }}</h2>
+    <p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
+    <img [src]="trip.thumbnailUrl">
+    <p>{{ trip.description }}</p>
+    <span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
+</div>
