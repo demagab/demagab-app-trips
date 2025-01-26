@@ -1,4 +1,7 @@
-<div *ngFor="let trip of trips$ | async">
+<span *ngIf="listOfTripsIsLoading$ | async">Loading...</span>
+<span *ngIf="listOfTripsHasError$ | async" style="color: red">An error has occurred</span>
+
+<div *ngFor="let trip of listOfTrips$ | async">
     <h2>{{ trip.title }}</h2>
     <p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
     <img [src]="trip.thumbnailUrl">

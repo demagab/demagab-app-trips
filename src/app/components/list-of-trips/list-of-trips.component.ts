@@ -1,23 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { TripDef } from '@app/interfaces/trip-def.interface';
-import { TripsDataService } from '@app/services/trips-data.service';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { TripDef } from '@app/interfaces/trip-def.interface';
+import { AppFacade } from '@app/store/app.facade';
 
 @Component({
   selector: 'app-list-of-trips',
   imports: [CommonModule],
-  providers: [TripsDataService],
+  providers: [],
   templateUrl: './list-of-trips.component.html',
-  styleUrl: './list-of-trips.component.scss'
+  styleUrl: './list-of-trips.component.scss',
 })
-export class ListOfTripsComponent {
-  trips$: Observable<TripDef[]>;
+export class ListOfTripsComponent implements OnInit {
+  listOfTrips$: Observable<TripDef[]>;
+  listOfTripsIsLoading$: Observable<boolean>;
+  listOfTripsHasError$: Observable<boolean>;
 
-  constructor(
-    private tripsDataService: TripsDataService
-  ) {
-    this.trips$ = this.tripsDataService.getTrips$();
+  constructor(private appFacade: AppFacade) {
+    this.listOfTrips$ = this.appFacade.listOfTrips$();
+    this.listOfTripsIsLoading$ = this.appFacade.listOfTripsIsLoading$();
+    this.listOfTripsHasError$ = this.appFacade.listOfTripsHasError$();
   }
 
+  ngOnInit(): void {
+    this.appFacade.fetchListOfTrips();
+  }
 }
