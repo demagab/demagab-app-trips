@@ -6,6 +6,11 @@ export interface AppState {
     isLoading: boolean;
     hasError: boolean;
   };
+  selectedTrip: {
+    item?: TripDef;
+    isLoading: boolean;
+    hasError: boolean;
+  }
 }
 
 export const initialState: AppState = {
@@ -14,4 +19,9 @@ export const initialState: AppState = {
     isLoading: false,
     hasError: false,
   },
+  selectedTrip: {
+    item: undefined,
+    isLoading: false,
+    hasError: false,
+  }
 };

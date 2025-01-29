@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import { AppFacade } from '@app/store/app.facade';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-of-trips',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   providers: [],
   templateUrl: './list-of-trips.component.html',
   styleUrl: './list-of-trips.component.scss',
