@@ -1,1 +1,10 @@
-<span>Trip ID: {{ tripId }}</span>
+<span *ngIf="tripIsLoading$ | async">Loading...</span>
+<span *ngIf="tripHasError$ | async" style="color: red">An error has occurred</span>
+
+<div *ngIf="trip$ | async as trip">
+<h1>{{ trip.title }}</h1>
+<p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
+<img height="256px" width="256px" [src]="trip.imageUrl">
+<p>{{ trip.description }}</p>
+<span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
+</div>

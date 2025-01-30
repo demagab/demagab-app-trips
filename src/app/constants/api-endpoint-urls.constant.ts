@@ -1,3 +1,4 @@
 export const ApiEndpointUrls = {
-    TRIPS: '/trips'
+    TRIPS: '/trips',
+    TRIP: '/trips/{id}',
 }

@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as AppActions from '@app/store/app.actions';
 import { initialState } from '@app/store/app.state';
+import { TripDef } from '@app/interfaces/trip-def.interface';
 
 export const appReducer = createReducer(
   initialState,
@@ -27,6 +28,42 @@ export const appReducer = createReducer(
     ...state,
     listOfTrips: {
       ...state.listOfTrips,
+      isLoading: false,
+      hasError: true,
+    },
+  })),
+
+  on(AppActions.loadTripDetailsRequest, (state, { itemId }) => {
+    const tripOverview = state.listOfTrips.items.find((it) => it.id === itemId);
+    const preloadedTripOverview: TripDef | undefined = tripOverview && {
+      ...tripOverview,
+    };
+
+    return {
+      ...state,
+      selectedTrip: {
+        ...state.selectedTrip,
+        item: preloadedTripOverview,
+        isLoading: true,
+        hasError: false,
+      },
+    };
+  }),
+
+  on(AppActions.loadTripDetailsSuccess, (state, { item }) => ({
+    ...state,
+    selectedTrip: {
+      ...state.selectedTrip,
+      item: item,
+      isLoading: false,
+      hasError: false,
+    },
+  })),
+
+  on(AppActions.loadTripDetailsFailure, (state) => ({
+    ...state,
+    selectedTrip: {
+      ...state.selectedTrip,
       isLoading: false,
       hasError: true,
     },

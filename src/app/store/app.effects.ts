@@ -12,9 +12,9 @@ export class AppEffects {
     () =>
       this.actions$.pipe(
         ofType(AppActions.loadListOfTripsRequest),
-        switchMap((action) =>
+        switchMap(_ =>
           this.tripsDataService.getTrips$().pipe(
-            map((trips) => AppActions.loadListOfTripsSuccess({ items: trips })),
+            map(trips => AppActions.loadListOfTripsSuccess({ items: trips })),
             catchError(() => of(AppActions.loadListOfTripsFailure())),
           ),
         ),
@@ -22,12 +22,19 @@ export class AppEffects {
     { dispatch: true },
   );
 
-  /*test$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AppActions.addItems),
-      tap(it=> console.log('addItems effect', it))
-    ), { dispatch: false }
-  );*/
+  loadTripDetails$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppActions.loadTripDetailsRequest),
+        switchMap(action =>
+          this.tripsDataService.getTripById$(action.itemId).pipe(
+            map(trip => AppActions.loadTripDetailsSuccess({ item: trip })),
+            catchError(() => of(AppActions.loadTripDetailsFailure())),
+          ),
+        ),
+      ),
+    { dispatch: true },
+  );
 
   constructor(
     private actions$: Actions,

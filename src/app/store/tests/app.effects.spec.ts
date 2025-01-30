@@ -88,4 +88,41 @@ describe(`AppEffects`, () => {
       expect(spyOnService).toHaveBeenCalled();
     });
   });
+
+  describe(`loadTripDetails`, () => {
+    it(`should dispatch loadTripDetailsSuccess with an item`, () => {
+      const payload = { item: mockTrip1 };
+      const action = AppActions.loadTripDetailsRequest({
+        itemId: mockTrip1.id,
+      });
+      const outcome = AppActions.loadTripDetailsSuccess(payload);
+
+      const spyOnService = spyOn(
+        tripsDataService,
+        'getTripById$',
+      ).and.returnValue(of(mockTrip1));
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripDetails$).toBeObservable(expected$);
+      expect(spyOnService).toHaveBeenCalledOnceWith(mockTrip1.id);
+    });
+
+    it(`should dispatch loadListOfTripsFailure`, () => {
+      const action = AppActions.loadTripDetailsRequest({
+        itemId: 'unknown-trip',
+      });
+      const outcome = AppActions.loadTripDetailsFailure();
+
+      spyOn(tripsDataService, 'getTripById$').and.returnValue(
+        throwError(() => new HttpErrorResponse({})),
+      );
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripDetails$).toBeObservable(expected$);
+    });
+  });
 });

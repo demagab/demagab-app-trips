@@ -14,3 +14,17 @@ export const loadListOfTripsSuccess = createAction(
 export const loadListOfTripsFailure = createAction(
   '[App] Load list of trips - Failure',
 );
+
+export const loadTripDetailsRequest = createAction(
+  '[App] Load trip details - Request',
+  props<{ itemId: string }>(),
+);
+
+export const loadTripDetailsSuccess = createAction(
+  '[App] Load trip details - Success',
+  props<{ item: TripDef }>(),
+);
+
+export const loadTripDetailsFailure = createAction(
+  '[App] Load trip details - Failure',
+);

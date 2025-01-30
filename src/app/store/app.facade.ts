@@ -27,5 +27,21 @@ export class AppFacade {
     return this.store$.select(AppSelectors.selectListOfTripsHasError);
   }
 
+  fetchTripDetails(tripId: string): void {
+    this.store$.dispatch(AppActions.loadTripDetailsRequest({itemId: tripId}));
+  }
+
+  selectedTrip$(): Observable<TripDef | undefined> {
+    return this.store$.select(AppSelectors.selectedTripItem);
+  }
+
+  selectedTripLoading$(): Observable<boolean> {
+    return this.store$.select(AppSelectors.selectedTripIsLoading);
+  }
+
+  selectedTripHasError$(): Observable<boolean> {
+    return this.store$.select(AppSelectors.selectedTripHasError);
+  }
+
   constructor(private store$: Store<AppState>) {}
 }
