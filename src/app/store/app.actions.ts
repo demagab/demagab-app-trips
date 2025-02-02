@@ -1,6 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 
 import { TripDef } from '@app/interfaces/trip-def.interface';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+
+export const setListOfTripsPagination = createAction(
+  '[App] Set list of trips pagination',
+  props<{ pagination: TripsPagination | undefined }>(),
+);
 
 export const loadListOfTripsRequest = createAction(
   '[App] Load list of trips - Request',

@@ -6,6 +6,14 @@ import { TripDef } from '@app/interfaces/trip-def.interface';
 export const appReducer = createReducer(
   initialState,
 
+  on(AppActions.setListOfTripsPagination, (state, { pagination }) => ({
+    ...state,
+    listOfTrips: {
+      ...state.listOfTrips,
+      pagination: pagination ?? initialState.listOfTrips.pagination
+    },
+  })),
+
   on(AppActions.loadListOfTripsRequest, (state) => ({
     ...state,
     listOfTrips: {

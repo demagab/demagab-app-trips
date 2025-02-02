@@ -7,6 +7,7 @@ import { TripDef } from '@app/interfaces/trip-def.interface';
 import { ListOfTripsDto, TripDto } from '@app/interfaces/trip-dto.interface';
 import { TripsMapperService } from '@app/services/trips-mapper.service';
 import { environment } from '@environments/production.environments';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,19 +15,21 @@ import { environment } from '@environments/production.environments';
 export class TripsDataService {
   constructor(private httpClient: HttpClient) {}
 
-  getTrips$(): Observable<TripDef[]> {
+  getTrips$(pagination?: TripsPagination): Observable<TripDef[]> {
     return this.httpClient
-      .get<ListOfTripsDto>(environment.apiUrl + ApiEndpointUrls.TRIPS)
+      .get<ListOfTripsDto>(environment.apiUrl + ApiEndpointUrls.TRIPS, {
+        params: pagination && TripsMapperService.mapTripsPagination(pagination),
+      })
       .pipe(
-        map(listOfTrips => TripsMapperService.mapListOfTripsDto(listOfTrips)),
+        map((listOfTrips) => TripsMapperService.mapListOfTripsDto(listOfTrips)),
       );
   }
 
   getTripById$(tripId: string): Observable<TripDef> {
     return this.httpClient
-      .get<TripDto>(environment.apiUrl + ApiEndpointUrls.TRIP.replace('{id}',tripId))
-      .pipe(
-        map(trip => TripsMapperService.mapTripDto(trip)),
-      );
+      .get<TripDto>(
+        environment.apiUrl + ApiEndpointUrls.TRIP.replace('{id}', tripId),
+      )
+      .pipe(map((trip) => TripsMapperService.mapTripDto(trip)));
   }
 }

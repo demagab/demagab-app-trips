@@ -6,17 +6,26 @@ import { AppState } from '@app/store/app.state';
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import * as AppActions from '@app/store/app.actions';
 import * as AppSelectors from '@app/store/app.selectors';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppFacade {
+  setListOfTripsPagination(pagination?: TripsPagination): void {
+    this.store$.dispatch(AppActions.setListOfTripsPagination({ pagination }));
+  }
+
   fetchListOfTrips(): void {
     this.store$.dispatch(AppActions.loadListOfTripsRequest());
   }
 
   listOfTrips$(): Observable<TripDef[]> {
     return this.store$.select(AppSelectors.selectListOfTripsItems);
+  }
+
+  listOfTripsPagination$(): Observable<TripsPagination | undefined> {
+    return this.store$.select(AppSelectors.selectListOfTripsPagination);
   }
 
   listOfTripsIsLoading$(): Observable<boolean> {

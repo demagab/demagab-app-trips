@@ -1,8 +1,10 @@
 import { TripDef } from '@app/interfaces/trip-def.interface';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 export interface AppState {
   listOfTrips: {
     items: TripDef[];
+    pagination?: TripsPagination;
     isLoading: boolean;
     hasError: boolean;
   };
@@ -16,6 +18,7 @@ export interface AppState {
 export const initialState: AppState = {
   listOfTrips: {
     items: [],
+    pagination: undefined,
     isLoading: false,
     hasError: false,
   },

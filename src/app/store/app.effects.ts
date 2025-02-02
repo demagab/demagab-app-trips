@@ -1,20 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import * as AppActions from '@app/store/app.actions';
+import { AppFacade } from '@app/store/app.facade';
 import { TripsDataService } from '@app/services/trips-data.service';
 
 @Injectable()
 export class AppEffects {
+  setListOfTripsPagination$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppActions.setListOfTripsPagination),
+        map((_) => AppActions.loadListOfTripsRequest()),
+      ),
+    { dispatch: true },
+  );
+
   loadListOfTrips$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AppActions.loadListOfTripsRequest),
-        switchMap(_ =>
-          this.tripsDataService.getTrips$().pipe(
-            map(trips => AppActions.loadListOfTripsSuccess({ items: trips })),
+        withLatestFrom(this.appFacade.listOfTripsPagination$()),
+        switchMap(([_, pagination]) =>
+          this.tripsDataService.getTrips$(pagination).pipe(
+            map((trips) => AppActions.loadListOfTripsSuccess({ items: trips })),
             catchError(() => of(AppActions.loadListOfTripsFailure())),
           ),
         ),
@@ -26,9 +37,9 @@ export class AppEffects {
     () =>
       this.actions$.pipe(
         ofType(AppActions.loadTripDetailsRequest),
-        switchMap(action =>
+        switchMap((action) =>
           this.tripsDataService.getTripById$(action.itemId).pipe(
-            map(trip => AppActions.loadTripDetailsSuccess({ item: trip })),
+            map((trip) => AppActions.loadTripDetailsSuccess({ item: trip })),
             catchError(() => of(AppActions.loadTripDetailsFailure())),
           ),
         ),
@@ -38,6 +49,7 @@ export class AppEffects {
 
   constructor(
     private actions$: Actions,
+    private appFacade: AppFacade,
     private tripsDataService: TripsDataService,
   ) {}
 }

@@ -7,13 +7,41 @@ import {
   mockTrip2,
 } from '@app/store/tests/app-state-test';
 import { TripDef } from '@app/interfaces/trip-def.interface';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+import { initialState } from '@app/store/app.state';
 
 describe(`AppReducer`, () => {
+  describe(`setListOfTripsPagination`, () => {
+    it(`should reset the pagination`, () => {
+      const pagination = undefined;
+      const action = AppActions.setListOfTripsPagination({ pagination });
+      const state = appReducer(initialStateTest, action);
+
+      expect(state.listOfTrips.pagination).toBe(
+        initialState.listOfTrips.pagination,
+      );
+    });
+
+    it(`should set the pagination`, () => {
+      const pagination: TripsPagination = {
+        pageNumber: 0,
+        pageSize: 0,
+        filter: {
+          tags: ['test'],
+        },
+      };
+      const action = AppActions.setListOfTripsPagination({ pagination });
+      const state = appReducer(initialStateTest, action);
+
+      expect(state.listOfTrips.pagination).toBe(pagination);
+    });
+  });
+
   it(`should handle loadListOfTripsRequest`, () => {
     const action = AppActions.loadListOfTripsRequest();
     const state = appReducer(initialStateTest, action);
 
-    expect(state.listOfTrips.items).toEqual(initialStateTest.listOfTrips.items);
+    expect(state.listOfTrips.items).toBe(initialStateTest.listOfTrips.items);
     expect(state.listOfTrips.isLoading).toBeTrue();
     expect(state.listOfTrips.hasError).toBeFalse();
   });
@@ -23,7 +51,7 @@ describe(`AppReducer`, () => {
     const action = AppActions.loadListOfTripsSuccess({ items: trips });
     const state = appReducer(initialStateTest, action);
 
-    expect(state.listOfTrips.items).toEqual(trips);
+    expect(state.listOfTrips.items).toBe(trips);
     expect(state.listOfTrips.isLoading).toBeFalse();
     expect(state.listOfTrips.hasError).toBeFalse();
   });
@@ -32,7 +60,7 @@ describe(`AppReducer`, () => {
     const action = AppActions.loadListOfTripsFailure();
     const state = appReducer(initialStateTest, action);
 
-    expect(state.listOfTrips.items).toEqual(initialStateTest.listOfTrips.items);
+    expect(state.listOfTrips.items).toBe(initialStateTest.listOfTrips.items);
     expect(state.listOfTrips.isLoading).toBeFalse();
     expect(state.listOfTrips.hasError).toBeTrue();
   });
@@ -103,7 +131,7 @@ describe(`AppReducer`, () => {
     const action = AppActions.loadTripDetailsFailure();
     const state = appReducer(initialStateTest, action);
 
-    expect(state.selectedTrip.item).toEqual(initialStateTest.selectedTrip.item);
+    expect(state.selectedTrip.item).toBe(initialStateTest.selectedTrip.item);
     expect(state.selectedTrip.isLoading).toBeFalse();
     expect(state.selectedTrip.hasError).toBeTrue();
   });
