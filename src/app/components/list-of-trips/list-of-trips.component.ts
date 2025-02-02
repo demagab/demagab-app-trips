@@ -18,13 +18,25 @@ export class ListOfTripsComponent implements OnInit {
   listOfTripsIsLoading$: Observable<boolean>;
   listOfTripsHasError$: Observable<boolean>;
 
+  tripOfTheDay$: Observable<TripDef | undefined>;
+  tripOfTheDayIsLoading$: Observable<boolean>;
+  tripOfTheDayHasError$: Observable<boolean>;
+
   constructor(private appFacade: AppFacade) {
     this.listOfTrips$ = this.appFacade.listOfTrips$();
     this.listOfTripsIsLoading$ = this.appFacade.listOfTripsIsLoading$();
     this.listOfTripsHasError$ = this.appFacade.listOfTripsHasError$();
+
+    this.tripOfTheDay$ = this.appFacade.tripOfTheDayItem$();
+    this.tripOfTheDayIsLoading$ = this.appFacade.tripOfTheDayIsLoading$();
+    this.tripOfTheDayHasError$ = this.appFacade.tripOfTheDayHasErrorError$();
   }
 
   ngOnInit(): void {
     this.appFacade.fetchListOfTrips();
+  }
+
+  getTripOfTheDay():void {
+    this.appFacade.fetchTripOfTheDay();
   }
 }

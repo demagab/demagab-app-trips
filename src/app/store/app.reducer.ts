@@ -10,7 +10,7 @@ export const appReducer = createReducer(
     ...state,
     listOfTrips: {
       ...state.listOfTrips,
-      pagination: pagination ?? initialState.listOfTrips.pagination
+      pagination: pagination ?? initialState.listOfTrips.pagination,
     },
   })),
 
@@ -71,6 +71,34 @@ export const appReducer = createReducer(
   on(AppActions.loadTripDetailsFailure, (state) => ({
     ...state,
     selectedTrip: {
+      ...state.selectedTrip,
+      isLoading: false,
+      hasError: true,
+    },
+  })),
+
+  on(AppActions.loadTripOfTheDayRequest, (state) => ({
+    ...state,
+    tripOfTheDay: {
+      ...state.selectedTrip,
+      isLoading: false,
+      hasError: false,
+    },
+  })),
+
+  on(AppActions.loadTripOfTheDaySuccess, (state, { item }) => ({
+    ...state,
+    tripOfTheDay: {
+      ...state.selectedTrip,
+      item: item,
+      isLoading: false,
+      hasError: false,
+    },
+  })),
+
+  on(AppActions.loadTripOfTheDayFailure, (state) => ({
+    ...state,
+    tripOfTheDay: {
       ...state.selectedTrip,
       isLoading: false,
       hasError: true,

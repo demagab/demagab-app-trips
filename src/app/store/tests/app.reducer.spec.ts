@@ -135,4 +135,32 @@ describe(`AppReducer`, () => {
     expect(state.selectedTrip.isLoading).toBeFalse();
     expect(state.selectedTrip.hasError).toBeTrue();
   });
+
+  it(`should handle loadTripOfTheDayRequest`, () => {
+    const action = AppActions.loadTripOfTheDayRequest();
+    const state = appReducer(initialStateTest, action);
+
+    expect(state.tripOfTheDay.item).toBe(initialStateTest.selectedTrip.item);
+    expect(state.tripOfTheDay.isLoading).toBeFalse();
+    expect(state.tripOfTheDay.hasError).toBeTrue();
+  });
+
+  it(`should handle loadTripOfTheDaySuccess`, () => {
+    const trip: TripDef = mockTrip1;
+    const action = AppActions.loadTripOfTheDaySuccess({ item: trip });
+    const state = appReducer(initialStateTest, action);
+
+    expect(state.tripOfTheDay.item).toBe(trip);
+    expect(state.tripOfTheDay.isLoading).toBeFalse();
+    expect(state.tripOfTheDay.hasError).toBeFalse();
+  });
+
+  it(`should handle loadTripOfTheDayFailure`, () => {
+    const action = AppActions.loadTripOfTheDayFailure();
+    const state = appReducer(initialStateTest, action);
+
+    expect(state.tripOfTheDay.item).toBe(initialStateTest.selectedTrip.item);
+    expect(state.tripOfTheDay.isLoading).toBeFalse();
+    expect(state.tripOfTheDay.hasError).toBeTrue();
+  });
 });

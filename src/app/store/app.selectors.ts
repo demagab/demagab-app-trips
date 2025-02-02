@@ -37,3 +37,18 @@ export const selectedTripHasError = createSelector(
   selectAppState,
   (state) => state.selectedTrip.hasError,
 );
+
+export const tripOfTheDayItem = createSelector(
+  selectAppState,
+  (state) => state.tripOfTheDay.item,
+);
+
+export const tripOfTheDayIsLoading = createSelector(
+  selectAppState,
+  (state) => state.tripOfTheDay.isLoading,
+);
+
+export const tripOfTheDayHasError = createSelector(
+  selectAppState,
+  (state) => state.tripOfTheDay.hasError,
+);

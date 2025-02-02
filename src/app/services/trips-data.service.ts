@@ -32,4 +32,12 @@ export class TripsDataService {
       )
       .pipe(map((trip) => TripsMapperService.mapTripDto(trip)));
   }
+
+  getTripOfTheDay$(): Observable<TripDef> {
+    return this.httpClient
+      .get<TripDto>(
+        environment.apiUrl + ApiEndpointUrls.TRIP_OF_THE_DAY,
+      )
+      .pipe(map((trip) => TripsMapperService.mapTripDto(trip)));
+  }
 }

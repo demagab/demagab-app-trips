@@ -37,7 +37,7 @@ export class AppFacade {
   }
 
   fetchTripDetails(tripId: string): void {
-    this.store$.dispatch(AppActions.loadTripDetailsRequest({itemId: tripId}));
+    this.store$.dispatch(AppActions.loadTripDetailsRequest({ itemId: tripId }));
   }
 
   selectedTrip$(): Observable<TripDef | undefined> {
@@ -50,6 +50,22 @@ export class AppFacade {
 
   selectedTripHasError$(): Observable<boolean> {
     return this.store$.select(AppSelectors.selectedTripHasError);
+  }
+
+  fetchTripOfTheDay(): void {
+    this.store$.dispatch(AppActions.loadTripOfTheDayRequest());
+  }
+
+  tripOfTheDayItem$(): Observable<TripDef | undefined> {
+    return this.store$.select(AppSelectors.tripOfTheDayItem);
+  }
+
+  tripOfTheDayIsLoading$(): Observable<boolean> {
+    return this.store$.select(AppSelectors.tripOfTheDayIsLoading);
+  }
+
+  tripOfTheDayHasErrorError$(): Observable<boolean> {
+    return this.store$.select(AppSelectors.tripOfTheDayHasError);
   }
 
   constructor(private store$: Store<AppState>) {}

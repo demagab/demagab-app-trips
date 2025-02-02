@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import * as AppActions from '@app/store/app.actions';
 import { AppFacade } from '@app/store/app.facade';
 import { TripsDataService } from '@app/services/trips-data.service';
+import { PersistanceService } from '@app/services/persistance.service';
 
 @Injectable()
 export class AppEffects {
@@ -47,9 +54,35 @@ export class AppEffects {
     { dispatch: true },
   );
 
+  loadTripOfTheDay$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppActions.loadTripOfTheDayRequest),
+        switchMap((_) => {
+          const tripOfTheDayId = this.persistanceService.retrieveTripId();
+
+          return (
+            tripOfTheDayId
+              ? this.tripsDataService.getTripById$(tripOfTheDayId)
+              : this.tripsDataService.getTripOfTheDay$()
+          ).pipe(
+            map((trip) => AppActions.loadTripOfTheDaySuccess({ item: trip })),
+            tap(
+              (trip) =>
+                !tripOfTheDayId &&
+                this.persistanceService.persistTripId(trip.item.id),
+            ),
+            catchError(() => of(AppActions.loadTripOfTheDayFailure())),
+          );
+        }),
+      ),
+    { dispatch: true },
+  );
+
   constructor(
     private actions$: Actions,
     private appFacade: AppFacade,
     private tripsDataService: TripsDataService,
+    private persistanceService: PersistanceService,
   ) {}
 }

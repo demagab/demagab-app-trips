@@ -34,3 +34,16 @@ export const loadTripDetailsSuccess = createAction(
 export const loadTripDetailsFailure = createAction(
   '[App] Load trip details - Failure',
 );
+
+export const loadTripOfTheDayRequest = createAction(
+  '[App] Load trip of the day - Request',
+);
+
+export const loadTripOfTheDaySuccess = createAction(
+  '[App] Load trip of the day - Success',
+  props<{ item: TripDef }>(),
+);
+
+export const loadTripOfTheDayFailure = createAction(
+  '[App] Load trip of the day - Failure',
+);

@@ -15,6 +15,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+import { PersistanceService } from '@app/services/persistance.service';
 
 describe(`AppEffects`, () => {
   let effects: AppEffects;
@@ -23,6 +24,7 @@ describe(`AppEffects`, () => {
   let mockStore$: MockStore<AppState>;
 
   let tripsDataService: TripsDataService;
+  let persistanceService: PersistanceService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -40,6 +42,7 @@ describe(`AppEffects`, () => {
     mockStore$ = TestBed.inject(Store) as unknown as MockStore<AppState>;
 
     tripsDataService = TestBed.inject(TripsDataService);
+    persistanceService = TestBed.inject(PersistanceService);
   }));
 
   it(`should dispatch setListOfTripsPagination$`, () => {
@@ -181,6 +184,78 @@ describe(`AppEffects`, () => {
       const expected$ = cold('-b', { b: outcome });
 
       expect(effects.loadTripDetails$).toBeObservable(expected$);
+    });
+  });
+
+  describe(`loadTripDetails`, () => {
+    it(`should dispatch loadTripOfTheDaySuccess with an item with a new trip of the day`, () => {
+      const payload = { item: mockTrip1 };
+      const action = AppActions.loadTripOfTheDayRequest();
+      const outcome = AppActions.loadTripOfTheDaySuccess(payload);
+
+      spyOn(persistanceService, 'retrieveTripId').and.returnValue(null);
+
+      const spyOnService = spyOn(
+        tripsDataService,
+        'getTripOfTheDay$',
+      ).and.returnValue(of(mockTrip1));
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripOfTheDay$).toBeObservable(expected$);
+      expect(spyOnService).toHaveBeenCalled();
+    });
+
+    it(`should dispatch loadTripOfTheDaySuccess with an item with the existing trip of the day`, () => {
+      const payload = { item: mockTrip1 };
+      const action = AppActions.loadTripOfTheDayRequest();
+      const outcome = AppActions.loadTripOfTheDaySuccess(payload);
+
+      spyOn(persistanceService, 'retrieveTripId').and.returnValue(mockTrip1.id);
+
+      const spyOnService = spyOn(
+        tripsDataService,
+        'getTripById$',
+      ).and.returnValue(of(mockTrip1));
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripOfTheDay$).toBeObservable(expected$);
+      expect(spyOnService).toHaveBeenCalledOnceWith(mockTrip1.id);
+    });
+
+    it(`should dispatch loadTripOfTheDayFailure with a new trip of the day`, () => {
+      const action = AppActions.loadTripOfTheDayRequest();
+      const outcome = AppActions.loadTripOfTheDayFailure();
+
+      spyOn(persistanceService, 'retrieveTripId').and.returnValue(null);
+
+      spyOn(tripsDataService, 'getTripOfTheDay$').and.returnValue(
+        throwError(() => new HttpErrorResponse({})),
+      );
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripOfTheDay$).toBeObservable(expected$);
+    });
+
+    it(`should dispatch loadTripOfTheDayFailure with the existing trip of the day`, () => {
+      const action = AppActions.loadTripOfTheDayRequest();
+      const outcome = AppActions.loadTripOfTheDayFailure();
+
+      spyOn(persistanceService, 'retrieveTripId').and.returnValue('id');
+
+      spyOn(tripsDataService, 'getTripById$').and.returnValue(
+        throwError(() => new HttpErrorResponse({})),
+      );
+
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-b', { b: outcome });
+
+      expect(effects.loadTripOfTheDay$).toBeObservable(expected$);
     });
   });
 });

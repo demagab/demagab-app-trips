@@ -1,3 +1,20 @@
+<span *ngIf="tripOfTheDayIsLoading$ | async">Loading...</span>
+<span *ngIf="tripOfTheDayHasError$ | async" style="color: red">An error has occurred</span>
+
+<div *ngIf="(tripOfTheDay$ | async) as trip; else getTripOfTheDaySection">
+    <h2>{{ trip.title }}</h2>
+    <a [routerLink]="'/trip/'+trip.id">View</a>
+    <p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
+    <img height="48px" width="48px" [src]="trip.thumbnailUrl">
+    <p>{{ trip.description }}</p>
+    <span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
+</div>
+<ng-template #getTripOfTheDaySection>
+    <button (click)="getTripOfTheDay()">Get trip of the day</button>
+</ng-template>
+
+<hr/>
+
 <span *ngIf="listOfTripsIsLoading$ | async">Loading...</span>
 <span *ngIf="listOfTripsHasError$ | async" style="color: red">An error has occurred</span>
 

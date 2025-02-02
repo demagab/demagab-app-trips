@@ -23,5 +23,10 @@ export const initialStateTest: AppState = {
       item: mockTrip2,
       isLoading: false,
       hasError: false,
+    },
+    tripOfTheDay: {
+      item: mockTrip1,
+      isLoading: false,
+      hasError: false,
     }
   }
