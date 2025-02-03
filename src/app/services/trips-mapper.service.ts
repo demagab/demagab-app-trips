@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { TripDef } from '@app/interfaces/trip-def.interface';
+import { ListOfTripsDef, TripDef } from '@app/interfaces/trip-def.interface';
 import { ListOfTripsDto, TripDto } from '@app/interfaces/trip-dto.interface';
 import {
   TripsFilterSortProperty,
@@ -7,8 +7,14 @@ import {
 } from '@app/interfaces/trips-filter.interface';
 
 export class TripsMapperService {
-  static mapListOfTripsDto(dto: ListOfTripsDto): TripDef[] {
-    return dto.items?.map((trip) => TripsMapperService.mapTripDto(trip)) ?? [];
+  static mapListOfTripsDto(dto: ListOfTripsDto): ListOfTripsDef {
+    return {
+      items:
+        dto.items?.map((trip) => TripsMapperService.mapTripDto(trip)) ?? [],
+      limit: dto.limit,
+      page: dto.page,
+      total: dto.total,
+    };
   }
 
   static mapTripDto(dto: TripDto): TripDef {
@@ -25,6 +31,7 @@ export class TripsMapperService {
       thumbnailUrl: dto.thumbnailUrl,
       imageUrl: dto.imageUrl,
       creationDate: new Date(dto.creationDate),
+      score: TripsMapperService.getScore(dto.rating, dto.nrOfRatings, dto.co2),
     };
   }
 
@@ -86,5 +93,17 @@ export class TripsMapperService {
       case TripsFilterSortProperty.title:
         return 'title';
     }
+  }
+
+  private static getScore(
+    rating: number,
+    numberOfRatings: number,
+    co2Emission: number,
+  ): number {
+    return Math.floor(
+      ((15 + rating * numberOfRatings) / (5 + numberOfRatings) -
+        co2Emission / 1000) /
+        2,
+    );
   }
 }

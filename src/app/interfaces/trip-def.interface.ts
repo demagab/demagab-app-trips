@@ -1,3 +1,10 @@
+export interface ListOfTripsDef {
+  items: TripDef[];
+  limit: number;
+  page: number;
+  total: number;
+}
+
 export interface TripDef {
   id: string;
   title: string;
@@ -11,4 +18,5 @@ export interface TripDef {
   thumbnailUrl: string;
   imageUrl: string;
   creationDate: Date;
+  score?: number;
 }

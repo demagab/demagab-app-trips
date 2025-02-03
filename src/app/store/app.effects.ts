@@ -32,7 +32,12 @@ export class AppEffects {
         withLatestFrom(this.appFacade.listOfTripsPagination$()),
         switchMap(([_, pagination]) =>
           this.tripsDataService.getTrips$(pagination).pipe(
-            map((trips) => AppActions.loadListOfTripsSuccess({ items: trips })),
+            map((trips) =>
+              AppActions.loadListOfTripsSuccess({
+                items: trips.items,
+                itemsNumber: trips.total,
+              }),
+            ),
             catchError(() => of(AppActions.loadListOfTripsFailure())),
           ),
         ),

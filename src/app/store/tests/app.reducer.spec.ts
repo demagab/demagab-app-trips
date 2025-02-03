@@ -7,33 +7,58 @@ import {
   mockTrip2,
 } from '@app/store/tests/app-state-test';
 import { TripDef } from '@app/interfaces/trip-def.interface';
-import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+import {
+  TripsFilterSortProperty,
+  TripsPagination,
+} from '@app/interfaces/trips-filter.interface';
 import { initialState } from '@app/store/app.state';
 
 describe(`AppReducer`, () => {
   describe(`setListOfTripsPagination`, () => {
     it(`should reset the pagination`, () => {
-      const pagination = undefined;
-      const action = AppActions.setListOfTripsPagination({ pagination });
-      const state = appReducer(initialStateTest, action);
-
-      expect(state.listOfTrips.pagination).toBe(
-        initialState.listOfTrips.pagination,
-      );
-    });
-
-    it(`should set the pagination`, () => {
-      const pagination: TripsPagination = {
-        pageNumber: 0,
-        pageSize: 0,
+      const mockPagination: Partial<TripsPagination> = {
+        pageSize: 5555,
         filter: {
           tags: ['test'],
         },
       };
-      const action = AppActions.setListOfTripsPagination({ pagination });
+      const action = AppActions.setListOfTripsPagination({
+        pagination: mockPagination,
+        exclusive: true,
+      });
       const state = appReducer(initialStateTest, action);
 
-      expect(state.listOfTrips.pagination).toBe(pagination);
+      expect(state.listOfTrips.pagination).toEqual({
+        ...initialState.listOfTrips.pagination,
+        pageSize: mockPagination.pageSize!,
+        filter: {
+          ...initialState.listOfTrips.pagination.filter,
+          tags: mockPagination.filter!.tags,
+        },
+      });
+    });
+
+    it(`should not reset the pagination`, () => {
+      const mockPagination: Partial<TripsPagination> = {
+        pageSize: 5555,
+        filter: {
+          tags: ['test'],
+        },
+      };
+      const action = AppActions.setListOfTripsPagination({
+        pagination: mockPagination,
+        exclusive: false,
+      });
+      const state = appReducer(initialStateTest, action);
+
+      expect(state.listOfTrips.pagination).toEqual({
+        ...initialStateTest.listOfTrips.pagination,
+        pageSize: mockPagination.pageSize!,
+        filter: {
+          ...initialStateTest.listOfTrips.pagination.filter,
+          tags: mockPagination.filter!.tags,
+        },
+      });
     });
   });
 
@@ -48,10 +73,14 @@ describe(`AppReducer`, () => {
 
   it(`should handle loadListOfTripsSuccess`, () => {
     const trips: TripDef[] = [];
-    const action = AppActions.loadListOfTripsSuccess({ items: trips });
+    const action = AppActions.loadListOfTripsSuccess({
+      items: trips,
+      itemsNumber: 0,
+    });
     const state = appReducer(initialStateTest, action);
 
     expect(state.listOfTrips.items).toBe(trips);
+    expect(state.listOfTrips.itemsNumber).toBe(trips.length);
     expect(state.listOfTrips.isLoading).toBeFalse();
     expect(state.listOfTrips.hasError).toBeFalse();
   });
@@ -141,8 +170,8 @@ describe(`AppReducer`, () => {
     const state = appReducer(initialStateTest, action);
 
     expect(state.tripOfTheDay.item).toBe(initialStateTest.selectedTrip.item);
-    expect(state.tripOfTheDay.isLoading).toBeFalse();
-    expect(state.tripOfTheDay.hasError).toBeTrue();
+    expect(state.tripOfTheDay.isLoading).toBeTrue();
+    expect(state.tripOfTheDay.hasError).toBeFalse();
   });
 
   it(`should handle loadTripOfTheDaySuccess`, () => {

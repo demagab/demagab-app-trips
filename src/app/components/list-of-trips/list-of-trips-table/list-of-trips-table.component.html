@@ -1,0 +1,50 @@
+<p-table
+    [value]="listOfTrips"
+    [lazy]="true"
+    [paginator]="true"
+    [loading]="loading"
+    [rows]="listOfTrips.length"
+    [first]="pagination.pageNumber"
+    [totalRecords]="listOfTripsNumber"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [showCurrentPageReport]="true"
+    [customSort]="true"
+    [sortField]="pagination.sortProperty"
+    [sortOrder]="pagination.sortDescending ? -1 : 1"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    (onLazyLoad)="lazyLoad($event)"
+    >
+    <ng-template #header>
+        <tr>
+            <th pSortableColumn="title">Title <p-sortIcon field="title" /></th>
+            <th>Image</th>
+            <th pSortableColumn="price">Price <p-sortIcon field="price" /></th>
+            <th>Category</th>
+            <th pSortableColumn="rating">Reviews <p-sortIcon field="rating" /></th>
+            <th>Emissions</th>
+            <th pSortableColumn="creationDate">Creation <p-sortIcon field="creationDate" /></th>
+            <th>Score</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-trip>
+        <tr>
+            <td><a [routerLink]="'/trip/'+trip.id">{{ trip.title }}</a></td>
+            <td>
+                <img
+                    height="48px" width="48px"
+                    [src]="trip.thumbnailUrl"
+                    [alt]="trip.description"
+                    class="w-24 rounded"
+                />
+            </td>
+            <td>{{ trip.price | currency: 'USD' }}</td>
+            <td>{{ trip.verticalType }}</td>
+            <td><p-rating [(ngModel)]="trip.rating" [readonly]="true" [disabled]="true" />{{trip.numberOfRatings}}</td>
+            <td>{{ trip.co2Emission }}</td>
+            <td>{{ trip.creationDate | date }}</td>
+            <td>
+                <p-tag [value]="getScoreTranslationKey(trip.score)" [severity]="getSeverity(trip.score)" />
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

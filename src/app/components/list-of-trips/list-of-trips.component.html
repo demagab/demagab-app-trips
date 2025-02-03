@@ -10,19 +10,16 @@
     <span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
 </div>
 <ng-template #getTripOfTheDaySection>
-    <button (click)="getTripOfTheDay()">Get trip of the day</button>
+    <p-button (click)="getTripOfTheDay()" label="Get trip of the day" />
 </ng-template>
 
 <hr/>
 
-<span *ngIf="listOfTripsIsLoading$ | async">Loading...</span>
-<span *ngIf="listOfTripsHasError$ | async" style="color: red">An error has occurred</span>
-
-<div *ngFor="let trip of listOfTrips$ | async">
-    <h2>{{ trip.title }}</h2>
-    <a [routerLink]="'/trip/'+trip.id">View</a>
-    <p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
-    <img height="48px" width="48px" [src]="trip.thumbnailUrl">
-    <p>{{ trip.description }}</p>
-    <span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
-</div>
+TODO: implement filter
+<app-list-of-trips-table
+[listOfTrips]="(listOfTrips$ | async) ?? []"
+[pagination]="(tripsPagination$ | async) ?? defaultTripsPagination"
+[loading]="(listOfTripsIsLoading$ | async) ?? false"
+[listOfTripsNumber]=" (listOfTripsNumber$ | async) ?? 0"
+(paginationChange)="onPaginationChange($event)"
+></app-list-of-trips-table>

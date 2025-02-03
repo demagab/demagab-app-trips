@@ -28,6 +28,8 @@ describe(`MapperService`, () => {
       const pagination: TripsPagination = {
         pageNumber: 1,
         pageSize: 10,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
         filter: {
           title: 'filterTitle',
           minimumPrice: 100,
@@ -49,6 +51,8 @@ describe(`MapperService`, () => {
       const pagination: TripsPagination = {
         pageNumber: 1,
         pageSize: 10,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
         filter: {
           tags: ['tag1 & test', 'tag2/test'],
         },
@@ -68,8 +72,8 @@ describe(`MapperService`, () => {
       const pagination: TripsPagination = {
         pageNumber: 1,
         pageSize: 10,
-        sortProperty: undefined,
-        sortDescending: undefined,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
         filter: {
           title: undefined,
           minimumPrice: undefined,
@@ -82,8 +86,6 @@ describe(`MapperService`, () => {
       const params: HttpParams =
         TripsMapperService.mapTripsPagination(pagination);
 
-      expect(params.has('sortBy')).toBeFalse();
-      expect(params.has('sortOrder')).toBeFalse();
       expect(params.has('titleFilter')).toBeFalse();
       expect(params.has('minPrice')).toBeFalse();
       expect(params.has('maxPrice')).toBeFalse();

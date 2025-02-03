@@ -2,17 +2,36 @@ import { createReducer, on } from '@ngrx/store';
 import * as AppActions from '@app/store/app.actions';
 import { initialState } from '@app/store/app.state';
 import { TripDef } from '@app/interfaces/trip-def.interface';
+import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 export const appReducer = createReducer(
   initialState,
 
-  on(AppActions.setListOfTripsPagination, (state, { pagination }) => ({
-    ...state,
-    listOfTrips: {
-      ...state.listOfTrips,
-      pagination: pagination ?? initialState.listOfTrips.pagination,
+  on(
+    AppActions.setListOfTripsPagination,
+    (state, { pagination, exclusive }) => {
+      const newPagination: TripsPagination = {
+        ...(exclusive
+          ? initialState.listOfTrips.pagination
+          : state.listOfTrips.pagination),
+        ...pagination,
+        filter: {
+          ...(exclusive
+            ? initialState.listOfTrips.pagination.filter
+            : state.listOfTrips.pagination.filter),
+          ...pagination.filter,
+        },
+      };
+
+      return {
+        ...state,
+        listOfTrips: {
+          ...state.listOfTrips,
+          pagination: newPagination,
+        },
+      };
     },
-  })),
+  ),
 
   on(AppActions.loadListOfTripsRequest, (state) => ({
     ...state,
@@ -23,11 +42,12 @@ export const appReducer = createReducer(
     },
   })),
 
-  on(AppActions.loadListOfTripsSuccess, (state, { items }) => ({
+  on(AppActions.loadListOfTripsSuccess, (state, { items, itemsNumber }) => ({
     ...state,
     listOfTrips: {
       ...state.listOfTrips,
       items: items,
+      itemsNumber: itemsNumber,
       isLoading: false,
     },
   })),
@@ -81,7 +101,7 @@ export const appReducer = createReducer(
     ...state,
     tripOfTheDay: {
       ...state.selectedTrip,
-      isLoading: false,
+      isLoading: true,
       hasError: false,
     },
   })),

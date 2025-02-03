@@ -14,7 +14,10 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
-import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+import {
+  TripsFilterSortProperty,
+  TripsPagination,
+} from '@app/interfaces/trips-filter.interface';
 import { PersistanceService } from '@app/services/persistance.service';
 
 describe(`AppEffects`, () => {
@@ -46,13 +49,15 @@ describe(`AppEffects`, () => {
   }));
 
   it(`should dispatch setListOfTripsPagination$`, () => {
-    const payload = { items: [] };
+    const payload = { items: [], itemsNumber: 0 };
     const action = AppActions.loadListOfTripsRequest();
     const outcome = AppActions.loadListOfTripsSuccess(payload);
 
     const mockPagination: TripsPagination = {
       pageNumber: 0,
       pageSize: 0,
+      sortProperty: TripsFilterSortProperty.title,
+      sortDescending: false,
     };
 
     mockStore$.overrideSelector(
@@ -61,7 +66,12 @@ describe(`AppEffects`, () => {
     );
 
     const spyOnService = spyOn(tripsDataService, 'getTrips$').and.returnValue(
-      of([]),
+      of({
+        items: [],
+        limit: 0,
+        page: 0,
+        total: 0,
+      }),
     );
 
     actions$ = hot('-a', { a: action });
@@ -73,13 +83,15 @@ describe(`AppEffects`, () => {
 
   describe(`loadListOfTrips`, () => {
     it(`should dispatch loadListOfTripsSuccess with an empty list`, () => {
-      const payload = { items: [] };
+      const payload = { items: [], itemsNumber: 0 };
       const action = AppActions.loadListOfTripsRequest();
       const outcome = AppActions.loadListOfTripsSuccess(payload);
 
       const mockPagination: TripsPagination = {
         pageNumber: 0,
         pageSize: 0,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
       };
 
       mockStore$.overrideSelector(
@@ -88,7 +100,12 @@ describe(`AppEffects`, () => {
       );
 
       const spyOnService = spyOn(tripsDataService, 'getTrips$').and.returnValue(
-        of([]),
+        of({
+          items: [],
+          limit: 0,
+          page: 0,
+          total: 0,
+        }),
       );
 
       actions$ = hot('-a', { a: action });
@@ -99,13 +116,15 @@ describe(`AppEffects`, () => {
     });
 
     it(`should dispatch loadListOfTripsSuccess with a list of items`, () => {
-      const payload = { items: [mockTrip1, mockTrip2] };
+      const payload = { items: [mockTrip1, mockTrip2], itemsNumber: 2 };
       const action = AppActions.loadListOfTripsRequest();
       const outcome = AppActions.loadListOfTripsSuccess(payload);
 
       const mockPagination: TripsPagination = {
         pageNumber: 0,
         pageSize: 0,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
       };
 
       mockStore$.overrideSelector(
@@ -114,7 +133,12 @@ describe(`AppEffects`, () => {
       );
 
       const spyOnService = spyOn(tripsDataService, 'getTrips$').and.returnValue(
-        of([mockTrip1, mockTrip2]),
+        of({
+          items: [mockTrip1, mockTrip2],
+          limit: 0,
+          page: 0,
+          total: 2,
+        }),
       );
 
       actions$ = hot('-a', { a: action });
@@ -131,6 +155,8 @@ describe(`AppEffects`, () => {
       const mockPagination: TripsPagination = {
         pageNumber: 0,
         pageSize: 0,
+        sortProperty: TripsFilterSortProperty.title,
+        sortDescending: false,
       };
 
       mockStore$.overrideSelector(

@@ -8,6 +8,11 @@ export const selectListOfTripsItems = createSelector(
   (state) => state.listOfTrips.items,
 );
 
+export const selectListOfTripsItemsNumber = createSelector(
+  selectAppState,
+  (state) => state.listOfTrips.itemsNumber,
+);
+
 export const selectListOfTripsPagination = createSelector(
   selectAppState,
   (state) => state.listOfTrips.pagination,

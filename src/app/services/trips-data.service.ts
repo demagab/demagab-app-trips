@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { ApiEndpointUrls } from '@app/constants/api-endpoint-urls.constant';
-import { TripDef } from '@app/interfaces/trip-def.interface';
+import { ListOfTripsDef, TripDef } from '@app/interfaces/trip-def.interface';
 import { ListOfTripsDto, TripDto } from '@app/interfaces/trip-dto.interface';
 import { TripsMapperService } from '@app/services/trips-mapper.service';
 import { environment } from '@environments/production.environments';
@@ -15,7 +15,7 @@ import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 export class TripsDataService {
   constructor(private httpClient: HttpClient) {}
 
-  getTrips$(pagination?: TripsPagination): Observable<TripDef[]> {
+  getTrips$(pagination?: TripsPagination): Observable<ListOfTripsDef> {
     return this.httpClient
       .get<ListOfTripsDto>(environment.apiUrl + ApiEndpointUrls.TRIPS, {
         params: pagination && TripsMapperService.mapTripsPagination(pagination),
@@ -35,9 +35,7 @@ export class TripsDataService {
 
   getTripOfTheDay$(): Observable<TripDef> {
     return this.httpClient
-      .get<TripDto>(
-        environment.apiUrl + ApiEndpointUrls.TRIP_OF_THE_DAY,
-      )
+      .get<TripDto>(environment.apiUrl + ApiEndpointUrls.TRIP_OF_THE_DAY)
       .pipe(map((trip) => TripsMapperService.mapTripDto(trip)));
   }
 }

@@ -12,8 +12,13 @@ import { TripsPagination } from '@app/interfaces/trips-filter.interface';
   providedIn: 'root',
 })
 export class AppFacade {
-  setListOfTripsPagination(pagination?: TripsPagination): void {
-    this.store$.dispatch(AppActions.setListOfTripsPagination({ pagination }));
+  setListOfTripsPagination(
+    pagination: Partial<TripsPagination>,
+    exclusive: boolean,
+  ): void {
+    this.store$.dispatch(
+      AppActions.setListOfTripsPagination({ pagination, exclusive }),
+    );
   }
 
   fetchListOfTrips(): void {
@@ -22,6 +27,10 @@ export class AppFacade {
 
   listOfTrips$(): Observable<TripDef[]> {
     return this.store$.select(AppSelectors.selectListOfTripsItems);
+  }
+
+  listOfTripsNumber$(): Observable<number> {
+    return this.store$.select(AppSelectors.selectListOfTripsItemsNumber);
   }
 
   listOfTripsPagination$(): Observable<TripsPagination | undefined> {

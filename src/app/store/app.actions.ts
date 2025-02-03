@@ -5,7 +5,7 @@ import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 export const setListOfTripsPagination = createAction(
   '[App] Set list of trips pagination',
-  props<{ pagination: TripsPagination | undefined }>(),
+  props<{ pagination: Partial<TripsPagination>; exclusive: boolean }>(),
 );
 
 export const loadListOfTripsRequest = createAction(
@@ -14,7 +14,7 @@ export const loadListOfTripsRequest = createAction(
 
 export const loadListOfTripsSuccess = createAction(
   '[App] Load list of trips - Success',
-  props<{ items: TripDef[] }>(),
+  props<{ items: TripDef[]; itemsNumber: number }>(),
 );
 
 export const loadListOfTripsFailure = createAction(
