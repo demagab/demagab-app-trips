@@ -14,12 +14,15 @@
 </ng-template>
 
 <hr/>
-
-TODO: implement filter
+<app-list-of-trips-filter
+    [filter]="(tripsPagination$ | async)?.filter ?? {}"
+    (filterChange)="onFilterChange($event)"
+></app-list-of-trips-filter>
 <app-list-of-trips-table
-[listOfTrips]="(listOfTrips$ | async) ?? []"
-[pagination]="(tripsPagination$ | async) ?? defaultTripsPagination"
-[loading]="(listOfTripsIsLoading$ | async) ?? false"
-[listOfTripsNumber]=" (listOfTripsNumber$ | async) ?? 0"
-(paginationChange)="onPaginationChange($event)"
+    [listOfTrips]="(listOfTrips$ | async) ?? []"
+    [pagination]="(tripsPagination$ | async) ?? defaultTripsPagination"
+    [loading]="(listOfTripsIsLoading$ | async) ?? false"
+    [hasError]="(listOfTripsHasError$ | async) ?? false"
+    [listOfTripsNumber]=" (listOfTripsNumber$ | async) ?? 0"
+    (paginationChange)="onPaginationChange($event)"
 ></app-list-of-trips-table>

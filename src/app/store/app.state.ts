@@ -30,7 +30,7 @@ export const initialState: AppState = {
     itemsNumber: 0,
     pagination: {
       pageNumber: 0,
-      pageSize: 10,
+      pageSize: 5,
       sortProperty: TripsFilterSortProperty.title,
       sortDescending: false,
     },

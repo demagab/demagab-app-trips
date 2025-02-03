@@ -5,7 +5,7 @@ import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 export const setListOfTripsPagination = createAction(
   '[App] Set list of trips pagination',
-  props<{ pagination: Partial<TripsPagination>; exclusive: boolean }>(),
+  props<{ pagination: Partial<TripsPagination>; forceFilter: boolean }>(),
 );
 
 export const loadListOfTripsRequest = createAction(

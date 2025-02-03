@@ -14,10 +14,10 @@ import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 export class AppFacade {
   setListOfTripsPagination(
     pagination: Partial<TripsPagination>,
-    exclusive: boolean,
+    forceFilter: boolean,
   ): void {
     this.store$.dispatch(
-      AppActions.setListOfTripsPagination({ pagination, exclusive }),
+      AppActions.setListOfTripsPagination({ pagination, forceFilter }),
     );
   }
 

@@ -9,14 +9,12 @@ export const appReducer = createReducer(
 
   on(
     AppActions.setListOfTripsPagination,
-    (state, { pagination, exclusive }) => {
+    (state, { pagination, forceFilter }) => {
       const newPagination: TripsPagination = {
-        ...(exclusive
-          ? initialState.listOfTrips.pagination
-          : state.listOfTrips.pagination),
+        ...state.listOfTrips.pagination,
         ...pagination,
         filter: {
-          ...(exclusive
+          ...(forceFilter
             ? initialState.listOfTrips.pagination.filter
             : state.listOfTrips.pagination.filter),
           ...pagination.filter,

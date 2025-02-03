@@ -8,14 +8,13 @@ import {
 } from '@app/store/tests/app-state-test';
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import {
-  TripsFilterSortProperty,
   TripsPagination,
 } from '@app/interfaces/trips-filter.interface';
 import { initialState } from '@app/store/app.state';
 
 describe(`AppReducer`, () => {
   describe(`setListOfTripsPagination`, () => {
-    it(`should reset the pagination`, () => {
+    it(`should reset the filter`, () => {
       const mockPagination: Partial<TripsPagination> = {
         pageSize: 5555,
         filter: {
@@ -24,12 +23,12 @@ describe(`AppReducer`, () => {
       };
       const action = AppActions.setListOfTripsPagination({
         pagination: mockPagination,
-        exclusive: true,
+        forceFilter: true,
       });
       const state = appReducer(initialStateTest, action);
 
       expect(state.listOfTrips.pagination).toEqual({
-        ...initialState.listOfTrips.pagination,
+        ...initialStateTest.listOfTrips.pagination,
         pageSize: mockPagination.pageSize!,
         filter: {
           ...initialState.listOfTrips.pagination.filter,
@@ -38,7 +37,7 @@ describe(`AppReducer`, () => {
       });
     });
 
-    it(`should not reset the pagination`, () => {
+    it(`should not reset the filter`, () => {
       const mockPagination: Partial<TripsPagination> = {
         pageSize: 5555,
         filter: {
@@ -47,7 +46,7 @@ describe(`AppReducer`, () => {
       };
       const action = AppActions.setListOfTripsPagination({
         pagination: mockPagination,
-        exclusive: false,
+        forceFilter: false,
       });
       const state = appReducer(initialStateTest, action);
 
