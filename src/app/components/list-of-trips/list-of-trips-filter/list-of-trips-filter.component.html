@@ -1,24 +1,26 @@
-<form [formGroup]="filterForm" (submit)="submit()" class="flex flex-wrap gap-4 items-start">
-    <p-floatlabel variant="in" class="w-full md:w-auto">
+<form [formGroup]="filterForm" (submit)="submit()" class="flex flex-wrap gap-4 items-center justify-center bg-gray-100 p-2">
+    <p-floatlabel variant="in">
         <input pInputText id="in_title" pSize="small" formControlName="title" autocomplete="off" />
         <label for="in_title">Title</label>
     </p-floatlabel>
-    <p-floatlabel variant="in" class="w-full md:w-auto">
+    <p-floatlabel variant="in">
         <input pInputText id="in_minimumRating" pSize="small" formControlName="minimumRating" autocomplete="off" />
         <label for="in_minimumRating">Minimum Rating</label>
     </p-floatlabel>
-    <p-floatlabel variant="in" class="w-full md:w-auto">
+    <p-floatlabel variant="in">
         <input pInputText id="in_minimumPrice" pSize="small" formControlName="minimumPrice" autocomplete="off" />
         <label for="in_minimumPrice">Minimum Price</label>
     </p-floatlabel>
-    <p-floatlabel variant="in" class="w-full md:w-auto">
+    <p-floatlabel variant="in">
         <input pInputText id="in_maximumPrice" pSize="small" formControlName="maximumPrice" autocomplete="off" />
         <label for="in_maximumPrice">Maximum Price</label>
     </p-floatlabel>
-    <p-floatlabel variant="in" class="w-full md:w-auto">
+    <p-floatlabel variant="in">
         <input pInputText id="in_tags" pSize="small" formControlName="tags" autocomplete="off" />
         <label for="in_tags">Tags</label>
     </p-floatlabel>
-    <p-button type="submit" label="Apply" severity="success" class="w-full md:w-auto" />
-    <p-button icon="pi pi-check" label="Reset" severity="warn" class="w-full md:w-auto" (click)="reset()" />
+    <div class="flex flex-wrap gap-4 items-center justify-center">
+        <p-button type="submit" label="Apply" severity="success" />
+        <p-button label="Reset" severity="warn"(click)="reset()" />
+    </div>
 </form>

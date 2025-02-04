@@ -4,6 +4,7 @@
     [paginator]="true"
     [loading]="loading"
     [rows]="listOfTrips.length"
+    [first]="tableFirst"
     [totalRecords]="listOfTripsNumber"
     [rowsPerPageOptions]="[5, 10, 20]"
     [showCurrentPageReport]="true"
@@ -11,6 +12,7 @@
     [sortField]="pagination.sortProperty"
     [sortOrder]="pagination.sortDescending ? -1 : 1"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    selectionMode="single"
     (onLazyLoad)="lazyLoad($event)"
     >
     <ng-template #header>
@@ -26,7 +28,7 @@
         </tr>
     </ng-template>
     <ng-template #body let-trip>
-        <tr>
+        <tr [routerLink]="'/trip/'+trip.id" class="cursor-pointer">
             <td><a [routerLink]="'/trip/'+trip.id">{{ trip.title }}</a></td>
             <td>
                 <img
@@ -39,7 +41,7 @@
             <td>{{ trip.price | currency: 'USD' }}</td>
             <td>{{ trip.verticalType }}</td>
             <td><p-rating [(ngModel)]="trip.rating" [readonly]="true" [disabled]="true" />{{trip.numberOfRatings}}</td>
-            <td>{{ trip.co2Emission }}</td>
+            <td>{{ trip.co2Emission | co2 }}</td>
             <td>{{ trip.creationDate | date }}</td>
             <td>
                 <p-tag [value]="getScoreTranslationKey(trip.score)" [severity]="getSeverity(trip.score)" />

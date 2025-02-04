@@ -27,7 +27,6 @@ import {
     FloatLabelModule,
   ],
   templateUrl: './list-of-trips-filter.component.html',
-  styleUrl: './list-of-trips-filter.component.scss',
 })
 export class ListOfTripsFilterComponent implements OnChanges {
   @Input() filter!: TripsFilter;
@@ -41,13 +40,16 @@ export class ListOfTripsFilterComponent implements OnChanges {
       title: new FormControl(this.filter?.title || ''),
       minimumPrice: new FormControl(this.filter?.minimumPrice || null, [
         Validators.min(0),
+        Validators.pattern(this.numberPattern),
       ]),
       maximumPrice: new FormControl(this.filter?.maximumPrice || null, [
         Validators.min(0),
+        Validators.pattern(this.numberPattern),
       ]),
       minimumRating: new FormControl(this.filter?.minimumRating || null, [
         Validators.min(0),
         Validators.max(5),
+        Validators.pattern(this.numberPattern),
       ]),
       tags: new FormControl(this.filter?.tags || []),
     });
@@ -66,4 +68,6 @@ export class ListOfTripsFilterComponent implements OnChanges {
   reset(): void {
     this.filterChange.emit(null);
   }
+
+  private readonly numberPattern = '^[0-9.]+$';
 }

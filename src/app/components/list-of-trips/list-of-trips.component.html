@@ -1,19 +1,9 @@
-<span *ngIf="tripOfTheDayIsLoading$ | async">Loading...</span>
-<span *ngIf="tripOfTheDayHasError$ | async" style="color: red">An error has occurred</span>
-
-<div *ngIf="(tripOfTheDay$ | async) as trip; else getTripOfTheDaySection">
-    <h2>{{ trip.title }}</h2>
-    <a [routerLink]="'/trip/'+trip.id">View</a>
-    <p>{{ trip.price }}<br />{{ trip.rating + '/5' + ' (' + trip.numberOfRatings + ')' }}</p>
-    <img height="48px" width="48px" [src]="trip.thumbnailUrl">
-    <p>{{ trip.description }}</p>
-    <span>{{ trip.verticalType }} | {{ trip.tags | json }} | {{ trip.co2Emission + ' CO2' }}</span>
-</div>
-<ng-template #getTripOfTheDaySection>
-    <p-button (click)="getTripOfTheDay()" label="Get trip of the day" />
-</ng-template>
-
-<hr/>
+<app-trip-of-the-day
+    [trip]="(tripOfTheDay$ | async) ?? null"
+    [loading]="(tripOfTheDayIsLoading$ | async) ?? false"
+    [hasError]="(tripOfTheDayHasError$ | async) ?? false"
+    (requestTrip)="onRequestTrip()"
+></app-trip-of-the-day>
 <app-list-of-trips-filter
     [filter]="(tripsPagination$ | async)?.filter ?? {}"
     (filterChange)="onFilterChange($event)"

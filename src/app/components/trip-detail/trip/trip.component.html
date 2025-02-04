@@ -1,0 +1,51 @@
+@if (loading) {
+    <div class="fixed inset-0 flex justify-center items-center z-50">
+        <p-progressSpinner styleClass="text-white" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+    </div>
+}
+<div class="flex flex-col items-center justify-start min-h-screen bg-gray-100">
+    <div class="max-w-7xl w-full px-6 py-12 sm:px-8">
+        <div class="lg:flex lg:space-x-16">
+            <div class="lg:w-1/3">
+                @if (trip) {
+                    <img [alt]="trip.title" class="rounded-lg shadow-xl w-full object-cover h-72 sm:h-96" [src]="trip.imageUrl" />
+                } @else if(hasError) {
+                    <div class="rounded-lg shadow-xl w-full object-cover h-72 sm:h-96 bg-red-300"></div>
+                }
+            </div>
+
+            <div class="lg:w-2/3 space-y-6">
+                @if (trip) {
+                    <div>
+                        <h2 class="flex items-center text-3xl font-bold text-gray-900 space-x-2">
+                            <span>{{ trip.title }}</span> 
+                            <p-tag *ngIf="trip.score != null" [value]="getScoreTranslationKey(trip.score)" [severity]="getSeverity(trip.score)" class="mt-1" />
+                        </h2>
+                        <ul class="flex items-center list-none space-x-2">
+                            <li class="text-primary">{{ trip.rating | number: '1.1-1' }}</li>
+                            <li><p-rating [(ngModel)]="trip.rating" [readonly]="true" [disabled]="true" /></li>
+                            <li>{{ trip.numberOfRatings }} votes</li>
+                        </ul>
+                    </div>
+
+                    <p class="text-lg text-gray-700">{{ trip.description }}</p>
+
+                    <ul class="mt-6 space-y-2 text-lg text-gray-800">
+                        <li><strong>Price:</strong> {{ trip.price | currency: 'USD' }}</li>
+                        <li><strong>Vertical Type:</strong> {{ trip.verticalType }}</li>
+                        <li><strong>Emission:</strong> {{ trip.co2Emission | co2 }}</li>
+                        <li><strong>Tags:</strong> {{ getFormattedTags(trip.tags) }}</li>
+                        <li><strong>Created:</strong> {{ trip.creationDate | date }}</li>
+                    </ul>
+                } @else if(hasError) {
+                    <div>
+                        <h2 class="flex items-center text-3xl font-bold text-gray-900 space-x-2">
+                            We can't find this trip
+                        </h2>
+                    </div>
+                    <p class="text-lg text-gray-700">An error has occurred</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

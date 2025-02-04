@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import { AppFacade } from '@app/store/app.facade';
 import { map, Observable } from 'rxjs';
+import { TripComponent } from '@app/components/trip-detail/trip/trip.component';
 
 @Component({
   selector: 'app-trip-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, TripComponent],
   templateUrl: './trip-detail.component.html',
-  styleUrl: './trip-detail.component.scss'
 })
 export class TripDetailComponent implements OnInit {
   trip$: Observable<TripDef | undefined>;

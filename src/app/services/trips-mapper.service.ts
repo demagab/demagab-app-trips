@@ -5,6 +5,7 @@ import {
   TripsFilterSortProperty,
   TripsPagination,
 } from '@app/interfaces/trips-filter.interface';
+import { TripsScoreService } from './trips-score.service';
 
 export class TripsMapperService {
   static mapListOfTripsDto(dto: ListOfTripsDto): ListOfTripsDef {
@@ -31,7 +32,7 @@ export class TripsMapperService {
       thumbnailUrl: dto.thumbnailUrl,
       imageUrl: dto.imageUrl,
       creationDate: new Date(dto.creationDate),
-      score: TripsMapperService.getScore(dto.rating, dto.nrOfRatings, dto.co2),
+      score: TripsScoreService.calculateScore(dto.rating, dto.nrOfRatings, dto.co2),
     };
   }
 
@@ -93,17 +94,5 @@ export class TripsMapperService {
       case TripsFilterSortProperty.title:
         return 'title';
     }
-  }
-
-  private static getScore(
-    rating: number,
-    numberOfRatings: number,
-    co2Emission: number,
-  ): number {
-    return Math.floor(
-      ((15 + rating * numberOfRatings) / (5 + numberOfRatings) -
-        co2Emission / 1000) /
-        2,
-    );
   }
 }

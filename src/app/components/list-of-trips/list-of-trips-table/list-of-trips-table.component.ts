@@ -14,6 +14,8 @@ import {
 } from '@app/interfaces/trips-filter.interface';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { Co2Pipe } from '@app/pipes/co2.pipe';
+import { TripsScoreService } from '@app/services/trips-score.service';
 
 @Component({
   selector: 'app-list-of-trips-table',
@@ -25,8 +27,9 @@ import { ToastModule } from 'primeng/toast';
     TableModule,
     Rating,
     Tag,
-    ToastModule
-  ],
+    ToastModule,
+    Co2Pipe
+],
   providers: [
     MessageService,
   ],
@@ -42,6 +45,10 @@ export class ListOfTripsTableComponent implements OnChanges {
 
   @Output() paginationChange: EventEmitter<TripsPagination> =
     new EventEmitter<TripsPagination>();
+
+  get tableFirst(): number {
+    return Math.max(1, ((this.pagination.pageNumber - 1) * this.pagination.pageSize));
+  }
 
   constructor(private messageService: MessageService) {}
 
@@ -69,11 +76,6 @@ export class ListOfTripsTableComponent implements OnChanges {
     });
   }
 
-  getSeverity(rating: number) {
-    return rating > 1 ? 'success' : rating > 0 ? 'warn' : 'danger';
-  }
-
-  getScoreTranslationKey(rating: number) {
-    return rating > 1 ? 'awesome' : rating > 0 ? 'good' : 'average';
-  }
+  getSeverity = TripsScoreService.getSeverity;
+  getScoreTranslationKey = TripsScoreService.getScoreTranslationKey;
 }

@@ -1,0 +1,24 @@
+<div class="flex justify-center p-4 bg-gray-200">
+    @if (trip) {
+        <p-card [style]="{ width: '40rem', overflow: 'hidden' }" class="flex">
+            <ng-template #header>
+                <div class="flex bg-gray-100">
+                    <img [alt]="trip.title" class="w-48 h-auto object-cover" [src]="trip.thumbnailUrl" />
+                    <div class="p-4 flex flex-col flex-1">
+                        <h1 class="text-xl font-bold pb-3">{{ trip.title }}</h1>
+                        <p-rating class="pb-1" [(ngModel)]="trip.rating" [readonly]="true" [disabled]="true" />
+                        <p>{{ trip.description }}</p>
+                        <ul class="flex list-none space-x-2">
+                            <li>{{ trip.price | currency: 'USD' }}</li>
+                            <li>{{ trip.verticalType }}</li>
+                            <li>{{ trip.co2Emission | co2 }}</li>
+                        </ul>
+                        <p-button class="pt-2" [routerLink]="'/trip/'+trip.id" label="View" />
+                    </div>
+                </div>
+            </ng-template>
+        </p-card>
+    } @else {
+        <p-button (click)="getTripOfTheDay()" [loading]="loading" size="large" label="Discover trip of the day" />
+    }
+</div>

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import { AppFacade } from '@app/store/app.facade';
-import { RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -12,22 +11,22 @@ import { FormsModule } from '@angular/forms';
 import { TripsFilter, TripsPagination } from '@app/interfaces/trips-filter.interface';
 import { ListOfTripsTableComponent } from '@app/components/list-of-trips/list-of-trips-table/list-of-trips-table.component';
 import { initialState } from '@app/store/app.state';
-import { ListOfTripsFilterComponent } from "./list-of-trips-filter/list-of-trips-filter.component";
+import { ListOfTripsFilterComponent } from '@app/components/list-of-trips/list-of-trips-filter/list-of-trips-filter.component';
+import { TripOfTheDayComponent } from '@app/components/list-of-trips/trip-of-the-day/trip-of-the-day.component';
 
 @Component({
   selector: 'app-list-of-trips',
   imports: [
     CommonModule,
-    RouterLink,
     FormsModule,
     ButtonModule,
     TableModule,
     ListOfTripsTableComponent,
-    ListOfTripsFilterComponent
+    ListOfTripsFilterComponent,
+    TripOfTheDayComponent
 ],
   providers: [],
   templateUrl: './list-of-trips.component.html',
-  styleUrl: './list-of-trips.component.scss',
 })
 export class ListOfTripsComponent {
   readonly defaultTripsPagination = initialState.listOfTrips.pagination;
@@ -54,20 +53,16 @@ export class ListOfTripsComponent {
     this.tripOfTheDayHasError$ = this.appFacade.tripOfTheDayHasErrorError$();
   }
 
-  getTripOfTheDay(): void {
+  onRequestTrip(): void {
     this.appFacade.fetchTripOfTheDay();
   }
 
   onFilterChange(filter: TripsFilter | null): void {
-    if (filter === null) {
-      this.appFacade.setListOfTripsPagination({ filter: {} }, true);
-    } else {
-      const filteredFilter = Object.keys(filter)
+    const filteredFilter = filter ?Object.keys(filter)
       .filter(key => filter[key as keyof TripsFilter] != null && filter[key as keyof TripsFilter] !== '')
-      .reduce((acc, key) => ({ ...acc, [key]: filter[key as keyof TripsFilter] }), {});
+      .reduce((acc, key) => ({ ...acc, [key]: filter[key as keyof TripsFilter] }), {}) : {};
 
-      this.appFacade.setListOfTripsPagination({ filter: filteredFilter }, false);
-    }
+      this.appFacade.setListOfTripsPagination({ filter: filteredFilter }, true);
   }
 
   onPaginationChange(pagination: TripsPagination): void {
