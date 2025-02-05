@@ -93,6 +93,8 @@ export class TripsMapperService {
         return 'rating';
       case TripsFilterSortProperty.title:
         return 'title';
+      case TripsFilterSortProperty.verticalType:
+        return 'verticalType';
     }
   }
 }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -16,6 +23,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Co2Pipe } from '@app/pipes/co2.pipe';
 import { TripsScoreService } from '@app/services/trips-score.service';
+import { buildTripRoute } from '@app/constants/app-routes.constant';
 
 @Component({
   selector: 'app-list-of-trips-table',
@@ -28,13 +36,10 @@ import { TripsScoreService } from '@app/services/trips-score.service';
     Rating,
     Tag,
     ToastModule,
-    Co2Pipe
-],
-  providers: [
-    MessageService,
+    Co2Pipe,
   ],
+  providers: [MessageService],
   templateUrl: './list-of-trips-table.component.html',
-  styleUrl: './list-of-trips-table.component.scss',
 })
 export class ListOfTripsTableComponent implements OnChanges {
   @Input() listOfTrips!: TripDef[];
@@ -58,7 +63,7 @@ export class ListOfTripsTableComponent implements OnChanges {
         severity: 'error',
         summary: 'Error',
         detail: 'An error has occurred while loading the trips',
-        life: 5000
+        life: 5000,
       });
     }
   }
@@ -76,6 +81,9 @@ export class ListOfTripsTableComponent implements OnChanges {
     });
   }
 
+  getTripRoute = buildTripRoute;
   getSeverity = TripsScoreService.getSeverity;
   getScoreTranslationKey = TripsScoreService.getScoreTranslationKey;
+
+  readonly sortableColumns = TripsFilterSortProperty;
 }

@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { Rating } from 'primeng/rating';
 import { Co2Pipe } from '@app/pipes/co2.pipe';
+import { buildTripRoute } from '@app/constants/app-routes.constant';
 
 @Component({
   selector: 'app-trip-of-the-day',
@@ -33,4 +34,5 @@ export class TripOfTheDayComponent {
     this.requestTrip.emit()
   }
 
+  getTripRoute = buildTripRoute;
 }

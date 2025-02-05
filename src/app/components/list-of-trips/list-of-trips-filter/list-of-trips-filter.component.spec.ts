@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListOfTripsFilterComponent } from './list-of-trips-filter.component';
+import { FormGroup, FormControl } from '@angular/forms';
 
 describe('ListOfTripsFilterComponent', () => {
   let component: ListOfTripsFilterComponent;
@@ -8,12 +9,20 @@ describe('ListOfTripsFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListOfTripsFilterComponent]
-    })
-    .compileComponents();
+      imports: [ListOfTripsFilterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ListOfTripsFilterComponent);
     component = fixture.componentInstance;
+
+    component.filterForm = new FormGroup({
+      title: new FormControl(),
+      minimumPrice: new FormControl(),
+      maximumPrice: new FormControl(),
+      minimumRating: new FormControl(),
+      tags: new FormControl(),
+    });
+
     fixture.detectChanges();
   });
 

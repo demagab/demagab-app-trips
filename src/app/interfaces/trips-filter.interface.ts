@@ -19,5 +19,6 @@ export interface TripsPagination {
     price = 'price',
     rating = 'rating',
     creationDate = 'creationDate',
+    verticalType = 'verticalType'
   }
   
