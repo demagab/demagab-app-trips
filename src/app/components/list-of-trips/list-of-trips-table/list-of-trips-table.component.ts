@@ -64,8 +64,8 @@ export class ListOfTripsTableComponent implements OnChanges {
     if (changes['hasError']?.currentValue === true) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Error',
-        detail: this.translateService.instant('content.an-error-has-occurred-while-loading-trips'),
+        summary: this.translateService.instant('content.error'),
+        detail: this.translateService.instant('error.an-error-has-occurred-while-loading-trips'),
         life: 5000,
       });
     }

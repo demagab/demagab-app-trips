@@ -6,7 +6,7 @@ import { ApiEndpointUrls } from '@app/constants/api-endpoint-urls.constant';
 import { ListOfTripsDef, TripDef } from '@app/interfaces/trip-def.interface';
 import { ListOfTripsDto, TripDto } from '@app/interfaces/trip-dto.interface';
 import { TripsMapperService } from '@app/services/trips-mapper.service';
-import { environment } from '@environments/production.environments';
+import { environment } from '@environments/environment';
 import { TripsPagination } from '@app/interfaces/trips-filter.interface';
 
 @Injectable({

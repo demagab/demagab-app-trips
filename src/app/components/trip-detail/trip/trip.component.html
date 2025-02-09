@@ -32,7 +32,7 @@
 
                     <ul class="mt-6 space-y-2 text-lg text-gray-800">
                         <li><strong>{{ 'content.price' | translate }}:</strong> {{ trip.price | currency: 'USD' }}</li>
-                        <li><strong>{{ 'content.vertical-type' | translate }}:</strong> {{ trip.verticalType | translate | titlecase }}</li>
+                        <li><strong>{{ 'content.vertical-type' | translate }}:</strong> {{ verticalTypeTranslationKey(trip.verticalType) | translate | titlecase }}</li>
                         <li><strong>{{ 'content.emission' | translate }}:</strong> {{ trip.co2Emission | co2 }}</li>
                         <li><strong>{{ 'content.tags' | translate }}:</strong> {{ getFormattedTags(trip.tags) }}</li>
                         <li><strong>{{ 'content.created' | translate }}:</strong> {{ trip.creationDate | date }}</li>

@@ -16,7 +16,7 @@ import { routes } from '@app/app.routes';
 import { appReducer } from '@app/store/app.reducer';
 import { AppEffects } from '@app/store/app.effects';
 import { initialState } from '@app/store/app.state';
-import { environment } from '@environments/production.environments';
+import { environment } from '@environments/environment';
 
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
 import {
@@ -68,7 +68,7 @@ export const appConfig: ApplicationConfig = {
     ]),
     provideStoreDevtools({
       maxAge: 25,
-      logOnly: !environment.production,
+      logOnly: environment.production,
     }),
   ],
 };
