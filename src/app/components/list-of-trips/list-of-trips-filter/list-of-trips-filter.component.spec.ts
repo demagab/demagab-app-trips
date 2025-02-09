@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListOfTripsFilterComponent } from './list-of-trips-filter.component';
 import { FormGroup, FormControl } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ListOfTripsFilterComponent', () => {
   let component: ListOfTripsFilterComponent;
@@ -9,7 +10,7 @@ describe('ListOfTripsFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListOfTripsFilterComponent],
+      imports: [ListOfTripsFilterComponent, TranslateModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListOfTripsFilterComponent);

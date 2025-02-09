@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { Rating } from 'primeng/rating';
 import { Co2Pipe } from '@app/pipes/co2.pipe';
 import { buildTripRoute } from '@app/constants/app-routes.constant';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trip-of-the-day',
@@ -18,7 +19,8 @@ import { buildTripRoute } from '@app/constants/app-routes.constant';
     CardModule,
     Rating,
     RouterLink,
-    Co2Pipe
+    Co2Pipe,
+    TranslateModule,
 ],
   templateUrl: './trip-of-the-day.component.html',
   styleUrl: './trip-of-the-day.component.scss'

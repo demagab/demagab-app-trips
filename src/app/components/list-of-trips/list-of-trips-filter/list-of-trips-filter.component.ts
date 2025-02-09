@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-list-of-trips-filter',
@@ -25,6 +26,7 @@ import {
     ReactiveFormsModule,
     InputTextModule,
     FloatLabelModule,
+    TranslateModule,
   ],
   templateUrl: './list-of-trips-filter.component.html',
 })

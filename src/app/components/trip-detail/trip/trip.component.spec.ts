@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TripComponent } from './trip.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TripComponent', () => {
   let component: TripComponent;
@@ -8,7 +9,7 @@ describe('TripComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TripComponent]
+      imports: [TripComponent, TranslateModule.forRoot()]
     })
     .compileComponents();
 

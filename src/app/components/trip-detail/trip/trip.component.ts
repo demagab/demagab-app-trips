@@ -7,6 +7,7 @@ import { TripDef } from '@app/interfaces/trip-def.interface';
 import { Tag } from 'primeng/tag';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { TripsScoreService } from '@app/services/trips-score.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trip',
@@ -15,6 +16,7 @@ import { TripsScoreService } from '@app/services/trips-score.service';
     Rating,
     FormsModule,
     ProgressSpinner,
+    TranslateModule,
     Tag,
     Co2Pipe
 ],

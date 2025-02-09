@@ -14,6 +14,7 @@ import { Tag } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { VerticalType, VerticalTypeTranslationKeys } from '@app/enum/vertical-type.enum';
 import { TripDef } from '@app/interfaces/trip-def.interface';
 import {
   TripsFilterSortProperty,
@@ -24,6 +25,7 @@ import { ToastModule } from 'primeng/toast';
 import { Co2Pipe } from '@app/pipes/co2.pipe';
 import { TripsScoreService } from '@app/services/trips-score.service';
 import { buildTripRoute } from '@app/constants/app-routes.constant';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-list-of-trips-table',
@@ -36,6 +38,7 @@ import { buildTripRoute } from '@app/constants/app-routes.constant';
     Rating,
     Tag,
     ToastModule,
+    TranslateModule,
     Co2Pipe,
   ],
   providers: [MessageService],
@@ -55,14 +58,14 @@ export class ListOfTripsTableComponent implements OnChanges {
     return Math.max(1, ((this.pagination.pageNumber - 1) * this.pagination.pageSize));
   }
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private translateService: TranslateService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['hasError']?.currentValue === true) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'An error has occurred while loading the trips',
+        detail: this.translateService.instant('content.an-error-has-occurred-while-loading-trips'),
         life: 5000,
       });
     }
@@ -84,6 +87,7 @@ export class ListOfTripsTableComponent implements OnChanges {
   getTripRoute = buildTripRoute;
   getSeverity = TripsScoreService.getSeverity;
   getScoreTranslationKey = TripsScoreService.getScoreTranslationKey;
+  verticalTypeTranslationKey = (verticalType: VerticalType) => VerticalTypeTranslationKeys[verticalType];
 
   readonly sortableColumns = TripsFilterSortProperty;
 }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListOfTripsTableComponent } from './list-of-trips-table.component';
 import { TripsPagination } from '@app/interfaces/trips-filter.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ListOfTripsTableComponent', () => {
   let component: ListOfTripsTableComponent;
@@ -8,7 +9,7 @@ describe('ListOfTripsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListOfTripsTableComponent],
+      imports: [ListOfTripsTableComponent, TranslateModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListOfTripsTableComponent);

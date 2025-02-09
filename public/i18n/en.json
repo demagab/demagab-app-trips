@@ -1,0 +1,40 @@
+{
+    "content": {
+        "apply": "Apply",
+        "created": "Created",
+        "discover-trip-of-the-day": "Discover trip of the day",
+        "emission": "Emission",
+        "image": "Image",
+        "maximum-price": "Maximum price",
+        "minimum-price": "Minimum price",
+        "minimum-rating": "Minimum rating",
+        "number-votes": "{count} {count, plural, one{vote} other{votes}}",
+        "price": "Price",
+        "rating": "Rating",
+        "reset": "Reset",
+        "score": "Score",
+        "score-values": {
+            "awesome": "Awesome",
+            "good": "Good",
+            "average": "Average"
+        },
+        "table": {
+            "page-report": "Showing {first} to {last} of {totalRecords} entries"
+        },
+        "tags": "Tags",
+        "title": "Title",
+        "vertical-type": "Vertical type",
+        "vertical-type-values": {
+            "car": "Car",
+            "flight": "Flight",
+            "hotel": "Hotel",
+            "train": "Train"
+        },
+        "view": "View"
+    },
+    "error": {
+        "an-error-has-occurred": "An error has occurred",
+        "an-error-has-occurred-while-loading-trips": "An error has occurred while loading the trips",
+        "we-cant-find-trip": "We can't find this trip"
+    }
+}
