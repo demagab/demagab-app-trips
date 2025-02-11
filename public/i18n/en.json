@@ -20,7 +20,7 @@
             "average": "Average"
         },
         "table": {
-            "page-report": "Showing {first} to {last} of {totalRecords} entries"
+            "page-report": "Showing '{first}' to '{last}' of '{totalRecords}' entries"
         },
         "tags": "Tags",
         "title": "Title",

@@ -20,7 +20,7 @@
             "average": "Normale"
         },
         "table": {
-            "page-report": "Elementi da {first} a {last} di {totalRecords}"
+            "page-report": "Elementi da '{first}' a '{last}' di '{totalRecords}'"
         },
         "tags": "Tag",
         "title": "Titolo",

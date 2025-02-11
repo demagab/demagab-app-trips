@@ -11,7 +11,7 @@
     [customSort]="true"
     [sortField]="pagination.sortProperty"
     [sortOrder]="pagination.sortDescending ? -1 : 1"
-    currentPageReportTemplate="{{ 'content.table.page-report' | translate }}"
+    [currentPageReportTemplate]="'content.table.page-report' | translate"
     selectionMode="single"
     (onLazyLoad)="lazyLoad($event)"
     >
