@@ -55,7 +55,7 @@ export class ListOfTripsTableComponent implements OnChanges {
     new EventEmitter<TripsPagination>();
 
   get tableFirst(): number {
-    return Math.max(1, ((this.pagination.pageNumber - 1) * this.pagination.pageSize));
+    return (this.pagination.pageNumber -1) * this.pagination.pageSize;
   }
 
   constructor(private messageService: MessageService, private translateService: TranslateService) {}
