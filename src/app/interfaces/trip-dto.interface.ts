@@ -1,3 +1,5 @@
+import { VerticalType } from '@app/enum/vertical-type.enum';
+
 export interface ListOfTripsDto {
     items: TripDto[];
     limit: number;
@@ -12,7 +14,7 @@ export interface TripDto {
     price: number;
     rating: number;
     nrOfRatings: number;
-    verticalType: string;
+    verticalType: VerticalType;
     tags: string[];
     co2: number;
     thumbnailUrl: string;

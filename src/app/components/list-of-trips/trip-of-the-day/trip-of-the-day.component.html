@@ -14,13 +14,13 @@
                             <li>{{ trip.co2Emission | co2 }}</li>
                         </ul>
                         <div class="pt-2">
-                            <p-button [routerLink]="getTripRoute(trip.id)" label="View" />
+                            <p-button [routerLink]="getTripRoute(trip.id)" [label]="'content.view' | translate" />
                         </div>
                     </div>
                 </div>
             </ng-template>
         </p-card>
     } @else {
-        <p-button (click)="getTripOfTheDay()" [loading]="loading" size="large" label="Discover trip of the day" />
+        <p-button (click)="getTripOfTheDay()" [loading]="loading" size="large" [label]="'content.discover-trip-of-the-day' | translate" />
     }
 </div>

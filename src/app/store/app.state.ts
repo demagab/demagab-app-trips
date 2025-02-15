@@ -29,7 +29,7 @@ export const initialState: AppState = {
     items: [],
     itemsNumber: 0,
     pagination: {
-      pageNumber: 0,
+      pageNumber: 1,
       pageSize: 5,
       sortProperty: TripsFilterSortProperty.title,
       sortDescending: false,

@@ -7,6 +7,7 @@ import {
 } from '@app/interfaces/trips-filter.interface';
 import { AppFacade } from '@app/store/app.facade';
 import { Store } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 describe('ListOfTripsComponent', () => {
@@ -16,7 +17,7 @@ describe('ListOfTripsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListOfTripsComponent],
+      imports: [ListOfTripsComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
         {

@@ -16,6 +16,6 @@ export class TripsScoreService {
       }
     
       static getScoreTranslationKey(rating: number): string {
-        return rating > 1 ? 'awesome' : rating > 0 ? 'good' : 'average';
+        return rating > 1 ? 'content.score-values.awesome' : rating > 0 ? 'content.score-values.good' : 'content.score-values.average';
       }
 }

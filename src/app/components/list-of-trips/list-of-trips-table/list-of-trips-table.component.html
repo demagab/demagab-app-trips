@@ -11,20 +11,20 @@
     [customSort]="true"
     [sortField]="pagination.sortProperty"
     [sortOrder]="pagination.sortDescending ? -1 : 1"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [currentPageReportTemplate]="'content.table.page-report' | translate"
     selectionMode="single"
     (onLazyLoad)="lazyLoad($event)"
     >
     <ng-template #header>
         <tr>
-            <th [pSortableColumn]="sortableColumns.title">Title <p-sortIcon [field]="sortableColumns.title" /></th>
-            <th>Image</th>
-            <th [pSortableColumn]="sortableColumns.price">Price <p-sortIcon [field]="sortableColumns.price" /></th>
-            <th [pSortableColumn]="sortableColumns.verticalType">verticalType <p-sortIcon [field]="sortableColumns.verticalType" /></th>
-            <th [pSortableColumn]="sortableColumns.rating">Reviews <p-sortIcon [field]="sortableColumns.rating" /></th>
-            <th>Emissions</th>
-            <th [pSortableColumn]="sortableColumns.creationDate">Creation <p-sortIcon [field]="sortableColumns.creationDate" /></th>
-            <th>Score</th>
+            <th [pSortableColumn]="sortableColumns.title">{{ 'content.title' | translate }} <p-sortIcon [field]="sortableColumns.title" /></th>
+            <th>{{ 'content.image' | translate }}</th>
+            <th [pSortableColumn]="sortableColumns.price">{{ 'content.price' | translate }} <p-sortIcon [field]="sortableColumns.price" /></th>
+            <th [pSortableColumn]="sortableColumns.verticalType">{{ 'content.vertical-type' | translate }} <p-sortIcon [field]="sortableColumns.verticalType" /></th>
+            <th [pSortableColumn]="sortableColumns.rating">{{ 'content.rating' | translate }} <p-sortIcon [field]="sortableColumns.rating" /></th>
+            <th>{{ 'content.emission' | translate }}</th>
+            <th [pSortableColumn]="sortableColumns.creationDate">{{ 'content.created' | translate }} <p-sortIcon [field]="sortableColumns.creationDate" /></th>
+            <th>{{ 'content.score' | translate }}</th>
         </tr>
     </ng-template>
     <ng-template #body let-trip>
@@ -39,12 +39,12 @@
                 />
             </td>
             <td>{{ trip.price | currency: 'USD' }}</td>
-            <td>{{ trip.verticalType | titlecase }}</td>
+            <td>{{ verticalTypeTranslationKey(trip.verticalType) | translate | titlecase }}</td>
             <td><p-rating [(ngModel)]="trip.rating" [readonly]="true" [disabled]="true" /></td>
             <td>{{ trip.co2Emission | co2 }}</td>
             <td>{{ trip.creationDate | date }}</td>
             <td>
-                <p-tag [value]="getScoreTranslationKey(trip.score)" [severity]="getSeverity(trip.score)" />
+                <p-tag [value]="getScoreTranslationKey(trip.score) | translate" [severity]="getSeverity(trip.score)" />
             </td>
         </tr>
     </ng-template>

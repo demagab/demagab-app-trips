@@ -1,0 +1,41 @@
+{
+    "content": {
+        "apply": "Applica",
+        "created": "Creato",
+        "discover-trip-of-the-day": "Scopri il viaggio del giorno",
+        "emission": "Emissioni",
+        "error": "Errore",
+        "image": "Immagine",
+        "maximum-price": "Prezzo massimo",
+        "minimum-price": "Prezzo minimo",
+        "minimum-rating": "Valutazione minima",
+        "number-votes": "{count} {count, plural, one{voto} other{voti}}",
+        "price": "Prezzo",
+        "rating": "Valutazione",
+        "reset": "Reset",
+        "score": "Punteggio",
+        "score-values": {
+            "awesome": "Fantastico",
+            "good": "Buono",
+            "average": "Normale"
+        },
+        "table": {
+            "page-report": "Elementi da '{first}' a '{last}' di '{totalRecords}'"
+        },
+        "tags": "Tag",
+        "title": "Titolo",
+        "vertical-type": "Tipo di viaggio",
+        "vertical-type-values": {
+            "car": "Auto",
+            "flight": "Volo",
+            "hotel": "Hotel",
+            "train": "Treno"
+        },
+        "view": "Visualizza"
+    },
+    "error": {
+        "an-error-has-occurred": "Si è verificato un errore",
+        "an-error-has-occurred-while-loading-trips": "Si è verificato un errore durante il caricamento dei viaggi",
+        "we-cant-find-trip": "Non riusciamo a trovare questo viaggio"
+    }
+}
