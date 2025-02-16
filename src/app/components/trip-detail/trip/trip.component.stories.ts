@@ -20,8 +20,8 @@ export default {
                 Rating,
                 ProgressSpinner,
                 Tag,
-                TranslateModule,
-                Co2Pipe
+                TranslateModule.forRoot(),
+                Co2Pipe,
             ]
         })
     ],
